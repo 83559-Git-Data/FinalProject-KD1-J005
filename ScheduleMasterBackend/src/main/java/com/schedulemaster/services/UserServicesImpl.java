@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.schedulemaster.dao.UserDao;
 import com.schedulemaster.dto.ApiResponse;
+import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UserRegistertaionDTO;
 import com.schedulemaster.pojos.User;
 import com.schedulemaster.exception.*;
@@ -32,7 +33,14 @@ public class UserServicesImpl implements UserService{
 		User u=userDao.save(user);
 		return u!=null ? new ApiResponse("Registration Successfully"):new ApiResponse("Registartion failed!!");
 	}
-	
+	@Override
+	public ApiResponse Login(LoginDTO dto) {
+		System.out.println(dto);
+		User u=userDao.findByUserNameAndPassword(dto.getUsername(),dto.getPassword())
+				.orElseThrow(()->new RuntimeException("Invalid Email or Password !!!!!!"));
+		System.out.println(u.toString());
+		return u!= null ? new ApiResponse("Login Successfully"):new ApiResponse("Login failed!!");
+	}
 	
 	
 }

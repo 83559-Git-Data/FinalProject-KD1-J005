@@ -19,8 +19,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "courses")
+@Entity(name = "courses")
 public class Course extends BaseEntity {
 	@Column(name = "name", nullable = false, length = 50)
 	private String courseName;

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,7 +29,7 @@ public class Faculty extends BaseEntity {
 	private LocalDate dob;
 	@Column(name = "mobile_no", nullable = false)
 	private String mobNo;
-	@Column(name = "userId")
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
+	@JoinColumn(name = "userId")
 	private User userId;
 }

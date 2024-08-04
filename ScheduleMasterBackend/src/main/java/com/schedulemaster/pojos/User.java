@@ -24,4 +24,6 @@ public class User extends BaseEntity {
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
 	public Role role;
+	@Column(name = "status")
+	private boolean status=true;
 }

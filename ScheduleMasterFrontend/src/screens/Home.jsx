@@ -1,15 +1,19 @@
-import Navbar from "../components/navbar"
+import React from 'react';
+import Content from '../components/Content';
+import Profile from '../components/Profile';
+import Sidebar from '../components/Sidebar';
+import './Home.css';
 
-
-function Home()
-{
-
-    return(
-        <div>
-             <Navbar/>
-            <h2 className="page-header">Home</h2>
+function Home() {
+    return (
+        <div className="dashboard">
+            <Sidebar />
+            <div className="dashboard--content">
+                <Content />
+                <Profile />
+            </div>
         </div>
-    )
+    );
 }
 
-export default Home
+export default Home;

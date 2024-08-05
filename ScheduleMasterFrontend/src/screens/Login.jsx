@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
 import { login } from "../services/admin";
+import bg from "../Images/a-well-lit-classroom-setting-with-a-central-focus--9iaZJ3P5TlaLHgUpr_gT-w-YB-loG-_R3Op7sgSsvSmEQ.jpeg";
 
 function Login(){
     const [userName, setuserName] = useState('')
@@ -13,41 +14,48 @@ function Login(){
     // get navigation hook
     const navigate = useNavigate()
 
-    const onLogin = async () => {
+    const onLogin = () => {
         if(userName.length == 0)
         {
-            toast.console.error('Please enter email');
+            toast.error('Please enter email');
         }
         else if(password.length == 0)
         {
-            toast.console.error('Please enter password');
+            toast.error('Please enter password');
         }
         else{
             // call login API and check its success
             // go to home screen
-            const result = await login(userName, password)
-            if(result['status'] == 'success')
-                {
-                    const data = result['data']
-                    sessionStorage['name'] = data['name']
-                    sessionStorage['token'] = data['token']
+            // const result = await login(userName, password)
+            // if(result['status'] == 'success')
+            //     {
+            //         const data = result['data']
+            //         sessionStorage['name'] = data['name']
+            //         sessionStorage['token'] = data['token']
                     navigate('/home')
-                }else{
-                    toast.error(result['error'])
-                }
+                // }else{
+                //     toast.error(result['error'])
+                // }
         }
     }
 
 
     return(
-        <div>
+        <div style={{
+            backgroundImage: `url(${bg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "100vh",
+            width: "100vw",
+          }}>
+            
             <h2 className="page-header">Login</h2>
             <div className="row">
             <div className='col'></div>
             <div className='col'>
                 <div className='form'>
                     <div className="mb-3">
-                        <label htmlFor="">userName</label>
+                        <label htmlFor="">Login</label>
                         <input 
                         onChange={(e) => {
                         if(e.target.value.length == 0){

@@ -1,4 +1,21 @@
-.App {
+/* .dashboard {
+  display: flex;
+  gap: 20px;
+}
+
+.dashboard--content {
+  background: #fff;
+  flex: 1; 
+  border-radius: 20px;
+  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: space-between;
+} */
+
+
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +52,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

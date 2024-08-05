@@ -8,4 +8,5 @@ import com.schedulemaster.pojos.Course;
 
 public interface CourseDao extends JpaRepository<Course, Long> {
 
+	Optional<Course> findByCourseName(String name);
 }

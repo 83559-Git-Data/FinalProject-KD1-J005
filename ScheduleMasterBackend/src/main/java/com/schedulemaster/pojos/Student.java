@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -31,6 +32,9 @@ public class Student extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Course course;
 	@Column(name = "enrolled_date")
-	@CreatedDate
+	@CreatedDate	
 	private LocalDate enrolledDate;
+	@OneToOne
+	@JoinColumn(name = "userId")
+	private User userId;
 }

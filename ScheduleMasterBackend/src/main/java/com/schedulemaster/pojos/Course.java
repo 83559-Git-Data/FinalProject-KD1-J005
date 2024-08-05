@@ -31,4 +31,6 @@ public class Course extends BaseEntity {
 	private LocalDate startDate;
 	@Column(name = "end_date")
 	private LocalDate endDate;
+	@Column(name = "capacity")
+	private int Capacity;
 }

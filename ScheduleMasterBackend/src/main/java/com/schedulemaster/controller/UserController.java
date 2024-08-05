@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 
+import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UpdateDTO;
 import com.schedulemaster.dto.UserRegistertaionDTO;
@@ -77,7 +78,7 @@ public class UserController {
 
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResourceAccessException("Something went Wrong!!"));
+					.body(new ApiResponse("Something went Wrong!!"));
 		}
 	}
 
@@ -138,7 +139,7 @@ public class UserController {
 			// reference
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResourceAccessException("Something went Wrong!!"));
+					.body(new ApiResponse("Something went Wrong!!"));
 		}
 	}
 }

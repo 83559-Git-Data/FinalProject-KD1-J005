@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 
+import com.schedulemaster.customexception.ApiException;
 import com.schedulemaster.dto.AddFacultyDTO;
+import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UpdateDTO;
 import com.schedulemaster.dto.UserRegistertaionDTO;
+import com.schedulemaster.exception.AuthenticationException;
 import com.schedulemaster.services.FacultyServices;
 import com.schedulemaster.services.UserService;
 
@@ -63,7 +66,7 @@ public class FacultyController {
 	// need
 	// to handle data sent in the body of an HTTP POST, PUT, or PATCH request, such
 	// as JSON or XML data.
-	public ResponseEntity<?> registerUser(@RequestBody AddFacultyDTO dto,@PathVariable long id) {
+	public ResponseEntity<?> addFacultyProfile(@RequestBody AddFacultyDTO dto,@PathVariable long id) {
 		// dto is genrally used to map the data comming from frontend
 		// this data is mapped using Model mapper class map function
 		System.out.println("register");
@@ -77,8 +80,8 @@ public class FacultyController {
 			// reference
 
 		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResourceAccessException("Something went Wrong!!"));
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body(new ApiResponse("Something went Wrong!!"));
 		}
 	}
 }

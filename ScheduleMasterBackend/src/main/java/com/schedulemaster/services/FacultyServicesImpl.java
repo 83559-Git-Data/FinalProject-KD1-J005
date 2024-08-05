@@ -1,10 +1,12 @@
 package com.schedulemaster.services;
 
 import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.schedulemaster.customexception.ResourceNotFoundException;
 import com.schedulemaster.dao.FacultyDao;
 import com.schedulemaster.dao.UserDao;
 import com.schedulemaster.dto.AddFacultyDTO;
@@ -12,6 +14,7 @@ import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.UserRegistertaionDTO;
 import com.schedulemaster.exception.AuthenticationException;
 import com.schedulemaster.pojos.Faculty;
+import com.schedulemaster.pojos.Role;
 import com.schedulemaster.pojos.User;
 
 //for the use of modularity we have implemented interface
@@ -28,31 +31,32 @@ import com.schedulemaster.pojos.User;
 //within the annotated scope are executed within a transaction context.
 public class FacultyServicesImpl implements FacultyServices {
 	// dependencies
-		@Autowired
-		// org.springframework.beans.factory.annotation.Autowired;
-		// this annotation allows Spring to resolve and inject collaborating beans into
-		// your bean.
-		// @Autowired(required = false) //this is annotation is used with argument to
-		// make dependency optional
-		private FacultyDao facultyDao;
-		@Autowired
-		private UserDao userDao;
-		@Autowired
-		private ModelMapper map;
-		// ModelMapper is a Java library used for object mapping. It helps in mapping
-		// data between different object models, which is especially useful in scenarios
-		// like mapping between database entities and Data Transfer Objects (DTOs), or
-		// between various representations of data in your application. This is commonly
-		// used in scenarios involving data transformation and reducing boilerplate
-		// code.
+	@Autowired
+	// org.springframework.beans.factory.annotation.Autowired;
+	// this annotation allows Spring to resolve and inject collaborating beans into
+	// your bean.
+	// @Autowired(required = false) //this is annotation is used with argument to
+	// make dependency optional
+	private FacultyDao facultyDao;
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private ModelMapper map;
+	// ModelMapper is a Java library used for object mapping. It helps in mapping
+	// data between different object models, which is especially useful in scenarios
+	// like mapping between database entities and Data Transfer Objects (DTOs), or
+	// between various representations of data in your application. This is commonly
+	// used in scenarios involving data transformation and reducing boilerplate
+	// code.
 
-		// Registration API
-		@Override
-		public ApiResponse addFaculty(AddFacultyDTO dto,Long id) {
-			 System.out.println(dto.toString());
-			 System.out.println(id);
-			// dto.setRole(dto.getRole().toUpperCase());
-			User user= userDao.findById(id).orElseThrow(()->new AuthenticationException("User Doesnt exitst"));
+	// Registration API
+	@Override
+	public ApiResponse addFaculty(AddFacultyDTO dto, Long id) {
+		System.out.println(dto.toString());
+		System.out.println(id);
+		// dto.setRole(dto.getRole().toUpperCase());
+		User user = userDao.findById(id).orElseThrow(() -> new AuthenticationException("User Doesnt exitst"));
+		if (user.getRole().equals(Role.FACULTY)) {
 			System.out.println(user.toString());
 			Faculty faculty = map.map(dto, Faculty.class);
 			System.out.println(faculty.toString());
@@ -60,10 +64,12 @@ public class FacultyServicesImpl implements FacultyServices {
 			System.out.println(faculty.toString());
 			// The map function in ModelMapper is used to copy values from one object to
 			// another based on the mappings defined.
-			//System.out.println(user.toString());
-			Faculty f=facultyDao.save(faculty);
-			//this is called dao method that is inherited from the JPA Repository
-			return f != null ? new ApiResponse("Profile Saved Successfully") : new ApiResponse("Something failed!!");
+			// System.out.println(user.toString());
+			Faculty f = facultyDao.save(faculty);
+
+			// this is called dao method that is inherited from the JPA Repository
 		}
-	
+		return new ApiResponse("Something failed!!");
+	}
+
 }

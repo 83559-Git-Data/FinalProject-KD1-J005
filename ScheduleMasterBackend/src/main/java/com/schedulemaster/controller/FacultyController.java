@@ -24,7 +24,7 @@ import com.schedulemaster.services.UserService;
 //this allows the other platform to run on the current server having port 8080
 //org.springframework.web.bind.annotation.CrossOrigin;
 
-@RequestMapping("/user")
+@RequestMapping("/faculty")
 //this annotation is mapped the request with the method that come with a client request method
 //org.springframework.web.bind.annotation.PostMapping;
 

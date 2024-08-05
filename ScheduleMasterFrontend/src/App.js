@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <div className='container'>
+    <div className='container-fluid'>
     <Routes>
       <Route path='' element={<Login/>}/>
       <Route path='login' element={<Login/>}/>

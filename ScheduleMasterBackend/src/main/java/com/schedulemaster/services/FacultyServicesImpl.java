@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.schedulemaster.dao.FacultyDao;
 import com.schedulemaster.dao.UserDao;
+import com.schedulemaster.dto.AddFacultyDTO;
 import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.UserRegistertaionDTO;
+import com.schedulemaster.exception.AuthenticationException;
+import com.schedulemaster.pojos.Faculty;
 import com.schedulemaster.pojos.User;
 
 //for the use of modularity we have implemented interface
@@ -30,6 +34,8 @@ public class FacultyServicesImpl implements FacultyServices {
 		// your bean.
 		// @Autowired(required = false) //this is annotation is used with argument to
 		// make dependency optional
+		private FacultyDao facultyDao;
+		@Autowired
 		private UserDao userDao;
 		@Autowired
 		private ModelMapper map;
@@ -42,16 +48,22 @@ public class FacultyServicesImpl implements FacultyServices {
 
 		// Registration API
 		@Override
-		public ApiResponse addFaculty(AddFacultyDTO dto) {
-			// System.out.println(dto.toString());
+		public ApiResponse addFaculty(AddFacultyDTO dto,Long id) {
+			 System.out.println(dto.toString());
+			 System.out.println(id);
 			// dto.setRole(dto.getRole().toUpperCase());
-			User user = map.map(dto, User.class);
+			User user= userDao.findById(id).orElseThrow(()->new AuthenticationException("User Doesnt exitst"));
+			System.out.println(user.toString());
+			Faculty faculty = map.map(dto, Faculty.class);
+			System.out.println(faculty.toString());
+			faculty.setUserId(user);
+			System.out.println(faculty.toString());
 			// The map function in ModelMapper is used to copy values from one object to
 			// another based on the mappings defined.
-			System.out.println(user.toString());
-			User u = userDao.save(user);
+			//System.out.println(user.toString());
+			Faculty f=facultyDao.save(faculty);
 			//this is called dao method that is inherited from the JPA Repository
-			return u != null ? new ApiResponse("Registration Successfully") : new ApiResponse("Registartion failed!!");
+			return f != null ? new ApiResponse("Profile Saved Successfully") : new ApiResponse("Something failed!!");
 		}
 	
 }

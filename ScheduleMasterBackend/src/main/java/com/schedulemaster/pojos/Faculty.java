@@ -27,9 +27,13 @@ public class Faculty extends BaseEntity {
 	private String panId;
 	@Column(name = "dob", nullable = false)
 	private LocalDate dob;
-	@Column(name = "mobile_no", nullable = false)
+	@Column(name = "mobile_no",nullable = true)
 	private String mobNo;
 	@OneToOne
 	@JoinColumn(name = "userId")
 	private User userId;
+	@Column(name = "address")
+	private String address;
+	@Column(name = "current_age")
+	private int currentAge;
 }

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 
+import com.schedulemaster.dto.AddFacultyDTO;
 import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UpdateDTO;
 import com.schedulemaster.dto.UserRegistertaionDTO;
+import com.schedulemaster.services.FacultyServices;
 import com.schedulemaster.services.UserService;
 
 @RestController
@@ -24,7 +26,7 @@ import com.schedulemaster.services.UserService;
 //this allows the other platform to run on the current server having port 8080
 //org.springframework.web.bind.annotation.CrossOrigin;
 
-@RequestMapping("/user")
+@RequestMapping("/faculty")
 //this annotation is mapped the request with the method that come with a client request method
 //org.springframework.web.bind.annotation.PostMapping;
 
@@ -42,13 +44,13 @@ public class FacultyController {
 	// your bean.
 	// @Autowired(required = false) //this is annotation is used with argument to
 	// make dependency optional
-	private UserService userService;
+	private FacultyServices facultyService;
 
 	// The @PostMapping annotation is part of the Spring framework and is used
 	// to handle HTTP POST requests in Spring MVC. It is a specialized version of
 	// the
 	// @RequestMapping annotation that acts specifically on HTTP POST requests.
-	@PostMapping("/register")
+	@PostMapping("/profile/{id}")
 
 	// The ResponseEntity class in Spring is used to represent the entire HTTP
 	// response,
@@ -61,7 +63,7 @@ public class FacultyController {
 	// need
 	// to handle data sent in the body of an HTTP POST, PUT, or PATCH request, such
 	// as JSON or XML data.
-	public ResponseEntity<?> registerUser(@RequestBody UserRegistertaionDTO dto) {
+	public ResponseEntity<?> registerUser(@RequestBody AddFacultyDTO dto,@PathVariable long id) {
 		// dto is genrally used to map the data comming from frontend
 		// this data is mapped using Model mapper class map function
 		System.out.println("register");
@@ -70,71 +72,10 @@ public class FacultyController {
 		// there is possibility that it can throw exception so we need to handle here in
 		// try catch
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(dto));
+			return ResponseEntity.status(HttpStatus.CREATED).body(facultyService.addFaculty(dto,id));
 			// here we are using Response entity send the response in body using service
 			// reference
 
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResourceAccessException("Something went Wrong!!"));
-		}
-	}
-
-	// The @PostMapping annotation is part of the Spring framework and is used
-	// to handle HTTP POST requests in Spring MVC. It is a specialized version of
-	// the
-	// @RequestMapping annotation that acts specifically on HTTP POST requests.
-	@PostMapping("/login")
-	// The ResponseEntity class in Spring is used to represent the entire HTTP
-	// response,
-	// including the status code, headers, and body. It is a powerful tool for
-	// creating
-	// and customizing HTTP responses in your RESTful APIs.
-	// The @RequestBody annotation in Spring MVC is used to bind the HTTP request
-	// body
-	// to a method parameter in a controller. This is particularly useful when you
-	// need
-	// to handle data sent in the body of an HTTP POST, PUT, or PATCH request, such
-	// as JSON or XML data.
-	public ResponseEntity<?> Login(@RequestBody LoginDTO dto) {
-		// dto is genarlly used to map the data coming from frontend
-		// this data is mapped using Model mapper class map function
-		System.out.println("CONTROLLER " + dto);
-		try {
-			// there is possibility that it can throw exception so we need to handle here in
-			// try catch
-			return ResponseEntity.status(HttpStatus.CREATED).body(userService.Login(dto));
-			// here we are using Response entity send the response in body using service
-			// reference
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResourceAccessException("Something went Wrong!!"));
-		}
-	}
-
-	// The @PostMapping annotation is part of the Spring framework and is used
-	// to handle HTTP POST requests in Spring MVC. It is a specialized version of
-	// the
-	// @RequestMapping annotation that acts specifically on HTTP POST requests.
-	@PostMapping("/update/{id}")
-	// The ResponseEntity class in Spring is used to represent the entire HTTP
-	// response,
-	// including the status code, headers, and body. It is a powerful tool for
-	// creating
-	// and customizing HTTP responses in your RESTful APIs.
-	// The @RequestBody annotation in Spring MVC is used to bind the HTTP request
-	// body
-	// to a method parameter in a controller. This is particularly useful when you
-	// need
-	// to handle data sent in the body of an HTTP POST, PUT, or PATCH request, such
-	// as JSON or XML data.
-	public ResponseEntity<?> Updateinfo(@PathVariable Long id, UpdateDTO dto) {
-		try {
-			// dto is genarlly used to map the data coming from frontend
-			// this data is mapped using Model mapper class map function
-			return ResponseEntity.status(HttpStatus.CREATED).body(userService.UpdateInfo(dto, id));
-			// here we are using Response entity send the response in body using service
-			// reference
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(new ResourceAccessException("Something went Wrong!!"));

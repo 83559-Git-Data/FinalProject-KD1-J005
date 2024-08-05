@@ -1,5 +1,7 @@
 package com.schedulemaster.dto;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,5 +10,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AddFacultyDTO {
-	private String 
+	private String panId;
+	private LocalDate dob;
+	private String address;
+	private int currentAge;
+	private String mobNo;
 }

@@ -84,4 +84,23 @@ public class FacultyController {
 				.body(new ApiResponse("Something went Wrong!!"));
 		}
 	}
+	@PostMapping("addmodule")
+	public ResponseEntity<?> addModule(@PathVariable String module) {
+		// dto is genrally used to map the data comming from frontend
+		// this data is mapped using Model mapper class map function
+//		System.out.println("register");
+		// System.out.println(dto);
+
+		// there is possibility that it can throw exception so we need to handle here in
+		// try catch
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(facultyService.addModule(module));
+			// here we are using Response entity send the response in body using service
+			// reference
+
+		} catch (RuntimeException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body(new ApiResponse("Something went Wrong!!"));
+		}
+	}
 }

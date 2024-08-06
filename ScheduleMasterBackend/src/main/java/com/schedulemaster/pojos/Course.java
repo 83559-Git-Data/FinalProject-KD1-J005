@@ -1,12 +1,14 @@
 package com.schedulemaster.pojos;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +35,18 @@ public class Course extends BaseEntity {
 	private LocalDate endDate;
 	@Column(name = "capacity")
 	private int Capacity;
+	@ManyToMany
+	@JoinTable(name = "course_modules",joinColumns = @JoinColumn(name="course_id"),
+	inverseJoinColumns = @JoinColumn(name="module_id"))
+	private Set<Module> modules=new HashSet<>();
+	
+	public void addModule(Module module) {
+		this.modules.add(module);
+		module.getCourses().add(this);	
+	}
+	
+	public void removeModule(Module module) {
+		this.modules.remove(module);
+		module.getCourses().remove(this);
+	}
 }

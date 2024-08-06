@@ -110,7 +110,7 @@ public class UserController {
 			// reference
 		} catch (RuntimeException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ResourceAccessException("Something went Wrong!!"));
+					.body(new ApiResponse("Something went Wrong!!"));
 		}
 	}
 

@@ -1,0 +1,135 @@
+[
+  {
+    "firstName": "Ram",
+    "lastName": "Sharma",
+    "course": "DAC",
+    "module": "Java",
+    "schedule": {
+      "startDate": "2024-08-01",
+      "endDate": "2024-08-15"
+    },
+    "mobileNumber": "1234567890"
+  },
+  {
+    "firstName": "Syam",
+    "lastName": "Verma",
+    "course": "DAC",
+    "module": "CPP",
+    "schedule": {
+      "startDate": "2024-08-16",
+      "endDate": "2024-08-31"
+    },
+    "mobileNumber": "1234567891"
+  },
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "course": "DAC",
+    "module": "OOPs",
+    "schedule": {
+      "startDate": "2024-09-01",
+      "endDate": "2024-09-15"
+    },
+    "mobileNumber": "1234567892"
+  },
+  {
+    "firstName": "Monika",
+    "lastName": "Gupta",
+    "course": "DAC",
+    "module": "DSA",
+    "schedule": {
+      "startDate": "2024-09-16",
+      "endDate": "2024-09-30"
+    },
+    "mobileNumber": "1234567893"
+  },
+  {
+    "firstName": "Voronika",
+    "lastName": "Kumar",
+    "course": "DAC",
+    "module": "DotNet",
+    "schedule": {
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-15"
+    },
+    "mobileNumber": "1234567894"
+  },
+  {
+    "firstName": "Mahak",
+    "lastName": "Singh",
+    "course": "DAC",
+    "module": "WPT",
+    "schedule": {
+      "startDate": "2024-10-16",
+      "endDate": "2024-10-31"
+    },
+    "mobileNumber": "1234567895"
+  },
+
+  {
+    "firstName": "Meera",
+    "lastName": "Rao",
+    "course": "DS",
+    "module": "Deep Learning",
+    "schedule": {
+      "startDate": "2024-09-16",
+      "endDate": "2024-09-30"
+    },
+    "mobileNumber": "1234567803"
+  },
+  {
+    "firstName": "Vikram",
+    "lastName": "Singh",
+    "course": "DS",
+    "module": "NLP",
+    "schedule": {
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-15"
+    },
+    "mobileNumber": "1234567804"
+  },
+  {
+    "firstName": "Pooja",
+    "lastName": "Desai",
+    "course": "DS",
+    "module": "Data Visualization",
+    "schedule": {
+      "startDate": "2024-10-16",
+      "endDate": "2024-10-31"
+    },
+    "mobileNumber": "1234567805"
+  },
+  {
+    "firstName": "Arun",
+    "lastName": "Agarwal",
+    "course": "AI",
+    "module": "ML",
+    "schedule": {
+      "startDate": "2024-08-01",
+      "endDate": "2024-08-15"
+    },
+    "mobileNumber": "1234567806"
+  },
+  {
+    "firstName": "Arvind",
+    "lastName": "Joshi",
+    "course": "AI",
+    "module": "CV",
+    "schedule": {
+      "startDate": "2024-10-01",
+      "endDate": "2024-10-15"
+    },
+    "mobileNumber": "1234567810"
+  },
+  {
+    "firstName": "Lakshmi",
+    "lastName": "Pillai",
+    "course": "AI",
+    "module": "RL",
+    "schedule": {
+      "startDate": "2024-10-16",
+      "endDate": "2024-10-31"
+    },
+    "mobileNumber": "1234567811"
+  }
+]

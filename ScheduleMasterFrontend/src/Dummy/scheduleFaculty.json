@@ -1,0 +1,63 @@
+[
+  {
+    "Course": "DAC",
+    "description": "Diploma in Advanced Computing.",
+    "modules": [
+      "Java",
+      "CPP",
+      "OOPs",
+      "DSA",
+      "DotNet",
+      "WPT",
+      "Adv Java",
+      "OSSDM",
+      "DBT"
+    ],
+    "faculties": ["Ram", "Syam", "John", "Monika", "Voronika", "Mahak"]
+  },
+  {
+    "Course": "DITISS",
+    "description": "Diploma in IT Infrastructure, Systems and Security.",
+    "modules": [
+      "Networking",
+      "System Admin",
+      "Security",
+      "Virtualization",
+      "Cloud",
+      "Storage"
+    ],
+    "faculties": ["Amit", "Neha", "Suresh", "Priya", "Karan", "Anita"]
+  },
+  {
+    "Course": "DS",
+    "description": "Data Science.",
+    "modules": [
+      "Python",
+      "Statistics",
+      "Machine Learning",
+      "Deep Learning",
+      "NLP",
+      "Data Visualization"
+    ],
+    "faculties": ["Rohit", "Swati", "Anand", "Meera", "Vikram", "Pooja"]
+  },
+  {
+    "Course": "AI",
+    "description": "Artificial Intelligence.",
+    "modules": ["ML", "DL", "AI Ethics", "Robotics", "CV", "RL"],
+    "faculties": ["Arun", "Sonal", "Ravi", "Divya", "Arvind", "Lakshmi"]
+  },
+  {
+    "Course": "IoT",
+    "description": "Internet of Things.",
+    "modules": [
+      "Sensors",
+      "Actuators",
+      "Networking",
+      "Data Analysis",
+      "Security",
+      "Edge Computing"
+    ],
+    "faculties": ["Rajesh", "Smita", "Rahul", "Kavita", "Vikas", "Anjali"]
+  }
+]

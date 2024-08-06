@@ -1,0 +1,119 @@
+[
+  {
+    "firstName": "Ankit",
+    "lastName": "Jain",
+    "course": "DAC",
+    "module": "Java",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-08-01",
+      "moduleEndDate": "2024-08-15"
+    },
+    "mobileNumber": "9876543210"
+  },
+  {
+    "firstName": "Sonia",
+    "lastName": "Patel",
+    "course": "DAC",
+    "module": "CPP",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-08-16",
+      "moduleEndDate": "2024-08-30"
+    },
+    "mobileNumber": "9876543211"
+  },
+  {
+    "firstName": "Raj",
+    "lastName": "Singh",
+    "course": "DAC",
+    "module": "DotNet",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-10-01",
+      "moduleEndDate": "2024-10-15"
+    },
+    "mobileNumber": "9876543214"
+  },
+  {
+    "firstName": "Neha",
+    "lastName": "Gupta",
+    "course": "DITISS",
+    "module": "System Admin",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-08-16",
+      "moduleEndDate": "2024-08-30"
+    },
+    "mobileNumber": "9876543217"
+  },
+  {
+    "firstName": "Swati",
+    "lastName": "Singh",
+    "course": "DS",
+    "module": "Statistics",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-08-16",
+      "moduleEndDate": "2024-08-30"
+    },
+    "mobileNumber": "9876543221"
+  },
+  {
+    "firstName": "Anand",
+    "lastName": "Sharma",
+    "course": "DS",
+    "module": "Machine Learning",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-09-01",
+      "moduleEndDate": "2024-09-15"
+    },
+    "mobileNumber": "9876543222"
+  },
+  {
+    "firstName": "Meera",
+    "lastName": "Rao",
+    "course": "DS",
+    "module": "Deep Learning",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-09-16",
+      "moduleEndDate": "2024-09-30"
+    },
+    "mobileNumber": "9876543223"
+  },
+  {
+    "firstName": "Vikram",
+    "lastName": "Jain",
+    "course": "DS",
+    "module": "NLP",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-10-01",
+      "moduleEndDate": "2024-10-15"
+    },
+    "mobileNumber": "9876543224"
+  },
+  {
+    "firstName": "Sonal",
+    "lastName": "Bhat",
+    "course": "AI",
+    "module": "DL",
+    "enrollment": {
+      "courseStartDate": "2024-08-01",
+      "courseEndDate": "2025-01-31",
+      "moduleStartDate": "2024-08-16",
+      "moduleEndDate": "2024-08-30"
+    },
+    "mobileNumber": "9876543227"
+  }
+]

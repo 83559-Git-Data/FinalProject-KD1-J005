@@ -30,6 +30,7 @@ function Register() {
     } else if (role.length === 0) {
       toast.error("Please select a role");
     } else {
+      debugger;
       try {
         const result = await register(
           firstName,
@@ -38,11 +39,15 @@ function Register() {
           password,
           role
         );
-        console.log("Registration result:", result); // Log the result
 
-        navigate("/login");
+        if (result["status"] == 201) {
+          toast.success("Registration Successfull");
+          navigate("/login");
+        } else {
+          toast.error("Registration Unsuccessfull ");
+        }
       } catch (error) {
-        toast.error("An error occurred during registration");
+        toast.error("Something went wrong on Registration");
       }
     }
   };

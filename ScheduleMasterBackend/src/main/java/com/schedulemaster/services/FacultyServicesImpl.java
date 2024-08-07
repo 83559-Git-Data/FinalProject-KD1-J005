@@ -46,8 +46,6 @@ public class FacultyServicesImpl implements FacultyServices {
 	private UserDao userDao;
 	@Autowired
 	private ModelMapper map;
-	@Autowired
-	private ModuleDao moduleDao;
 	// ModelMapper is a Java library used for object mapping. It helps in mapping
 	// data between different object models, which is especially useful in scenarios
 	// like mapping between database entities and Data Transfer Objects (DTOs), or
@@ -79,14 +77,4 @@ public class FacultyServicesImpl implements FacultyServices {
 		return new ApiResponse("Something failed!!");
 		}
 	}
-
-	@Override
-	public ApiResponse addModule(@RequestBody FacultyAddModule dto,@PathVariable Long id) {
-		Faculty faculty=facultyDao.findById(id).orElseThrow(()->new AuthenticationException("Fcaulty Doesnt exists") );
-		if(faculty!=null) {
-			
-		}
-		return null;
-	}
-
 }

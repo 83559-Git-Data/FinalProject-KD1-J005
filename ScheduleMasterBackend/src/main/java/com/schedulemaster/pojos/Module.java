@@ -18,7 +18,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "modules")
 public class Module extends BaseEntity {
-	@Column(name = "name", length = 50, nullable = false)
+	@Column(name = "name", length = 50, nullable = false,unique=true)
 	private String name;
 	@Column(name = "hours", nullable = false)
 	private int hours;	

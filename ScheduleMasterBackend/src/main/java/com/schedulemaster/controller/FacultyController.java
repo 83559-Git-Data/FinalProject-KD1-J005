@@ -13,6 +13,7 @@ import org.springframework.web.client.ResourceAccessException;
 
 import com.schedulemaster.customexception.ApiException;
 import com.schedulemaster.dto.AddFacultyDTO;
+import com.schedulemaster.dto.AddModule;
 import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UpdateDTO;
@@ -76,6 +77,25 @@ public class FacultyController {
 		// try catch
 		try {
 			return ResponseEntity.status(HttpStatus.CREATED).body(facultyService.addFaculty(dto,id));
+			// here we are using Response entity send the response in body using service
+			// reference
+
+		} catch (RuntimeException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+				.body(new ApiResponse("Something went Wrong!!"));
+		}
+	}
+	@PostMapping("/addmodule/{facultyId}")
+	public ResponseEntity<?> addModule(@RequestBody AddModule dto,@PathVariable long facultyId) {
+		// dto is genrally used to map the data comming from frontend
+		// this data is mapped using Model mapper class map function
+		System.out.println("register");
+		// System.out.println(dto);
+
+		// there is possibility that it can throw exception so we need to handle here in
+		// try catch
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(facultyService.addModule(dto,facultyId));
 			// here we are using Response entity send the response in body using service
 			// reference
 

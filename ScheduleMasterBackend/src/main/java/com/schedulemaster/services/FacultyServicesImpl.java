@@ -1,20 +1,17 @@
 package com.schedulemaster.services;
 
 import org.modelmapper.ModelMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.schedulemaster.customexception.ResourceNotFoundException;
 import com.schedulemaster.dao.FacultyDao;
+import com.schedulemaster.dao.ModuleDao;
 import com.schedulemaster.dao.UserDao;
 import com.schedulemaster.dto.AddFacultyDTO;
+import com.schedulemaster.dto.AddModule;
 import com.schedulemaster.dto.ApiResponse;
-import com.schedulemaster.dto.FacultyAddModule;
-import com.schedulemaster.dto.UserRegistertaionDTO;
 import com.schedulemaster.exception.AuthenticationException;
 import com.schedulemaster.pojos.Faculty;
 import com.schedulemaster.pojos.Module;
@@ -46,6 +43,9 @@ public class FacultyServicesImpl implements FacultyServices {
 	private UserDao userDao;
 	@Autowired
 	private ModelMapper map;
+	
+	@Autowired
+	private ModuleDao moduleDao;
 	// ModelMapper is a Java library used for object mapping. It helps in mapping
 	// data between different object models, which is especially useful in scenarios
 	// like mapping between database entities and Data Transfer Objects (DTOs), or
@@ -76,5 +76,16 @@ public class FacultyServicesImpl implements FacultyServices {
 		else {
 		return new ApiResponse("Something failed!!");
 		}
+	}
+
+	@Override
+	public ApiResponse addModule(AddModule dto, Long id) {
+		Faculty faculty =facultyDao.findById(id).orElseThrow(()->new ResourceNotFoundException("Faculty is not found of that id"));
+		Module module=moduleDao.findByName(dto.getName());
+		if(faculty!=null && module!=null) {
+			faculty.addModule(module);
+			return new ApiResponse("Module is added to the Course Successfully");
+		}
+		return new ApiResponse("somthing went wrong");
 	}
 }

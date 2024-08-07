@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login } from "../services/admin";
-import "./Common.css";
+import { login } from "../../services/admin";
+import "../Common.css";
 
 function Login() {
   const [email, setEmail] = useState("");

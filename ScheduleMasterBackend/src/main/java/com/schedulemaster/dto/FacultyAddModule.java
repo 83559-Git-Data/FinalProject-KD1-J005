@@ -1,5 +1,10 @@
 package com.schedulemaster.dto;
 
-public class FacultyAddModule {
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+public class FacultyAddModule {
+	private String name;
 }

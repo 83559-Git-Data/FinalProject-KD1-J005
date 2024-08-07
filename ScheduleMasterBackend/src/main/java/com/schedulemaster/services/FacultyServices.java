@@ -7,6 +7,4 @@ import com.schedulemaster.dto.FacultyAddModule;
 public interface FacultyServices {
 
 	public ApiResponse addFaculty(AddFacultyDTO dto,Long id);
-	
-	public ApiResponse addModule(FacultyAddModule module,Long id);
 }

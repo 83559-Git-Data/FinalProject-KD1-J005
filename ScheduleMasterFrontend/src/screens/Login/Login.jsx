@@ -5,18 +5,28 @@ import { login } from "../../services/admin";
 import "../Common.css";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // get navigation hook
   const navigate = useNavigate();
   const onLogin = async () => {
-    if (email.length == 0) {
+    debugger;
+    if (username.length == 0) {
       toast.error("Please enter email");
     } else if (password.length == 0) {
       toast.error("Please enter password");
     } else {
-      navigate("/home");
+      try {
+        const result = await login(username, password);
+        if (result["status"] == 201) {
+          navigate("/home");
+        } else {
+          toast.error(result["error"]);
+        }
+      } catch (error) {
+        toast.error("Something went wrong on Login");
+      }
     }
   };
 

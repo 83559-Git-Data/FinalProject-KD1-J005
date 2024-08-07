@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { register } from "../services/admin";
-import "./Common.css";
+import { register } from "../../services/admin";
+import "../Common.css";
 
 function Register() {
   const [firstName, setFirstName] = useState("");

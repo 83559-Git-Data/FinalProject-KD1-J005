@@ -47,10 +47,10 @@ public class Faculty extends BaseEntity {
 	
 	public void addModule(Module module) {
 		this.modules.add(module);
-		module.getFaculties().add(this);
+//		module.getFaculties().add(this);
 		}
 	public void removeModule(Module module) {
 		this.modules.remove(module);
-		module.getFaculties().remove(this);	
+//		module.getFaculties().remove(this);	
 	}
 }

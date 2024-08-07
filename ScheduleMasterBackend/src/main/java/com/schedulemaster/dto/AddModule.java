@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FacultyAddModule {
+public class AddModule {
 	private String name;
 }

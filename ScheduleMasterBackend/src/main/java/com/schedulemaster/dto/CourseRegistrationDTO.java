@@ -1,15 +1,18 @@
 package com.schedulemaster.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-
+//@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class CourseRegistrationDTO {
 	private String courseName;
 	private double fees;
@@ -17,5 +20,6 @@ public class CourseRegistrationDTO {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private int Capacity;
+//	private List<String> modules;
 
 }

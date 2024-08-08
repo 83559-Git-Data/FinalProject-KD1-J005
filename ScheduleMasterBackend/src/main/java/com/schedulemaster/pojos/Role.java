@@ -1,5 +1,5 @@
 package com.schedulemaster.pojos;
 
 public enum Role {
-	ADMIN,FACULTY,STUDENT
+	ROLE_ADMIN,ROLE_FACULTY,ROLE_STUDENT
 }

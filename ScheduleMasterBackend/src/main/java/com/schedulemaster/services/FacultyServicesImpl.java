@@ -64,7 +64,7 @@ public class FacultyServicesImpl implements FacultyServices {
 		System.out.println(id);
 		// dto.setRole(dto.getRole().toUpperCase());
 		User user = userDao.findById(id).orElseThrow(() -> new AuthenticationException("User Doesnt exitst"));
-		if (user.getRole().equals(Role.FACULTY)) {
+		if (user.getRole().equals(Role.ROLE_FACULTY)) {
 			System.out.println(user.toString());
 			Faculty faculty = map.map(dto, Faculty.class);
 			System.out.println(faculty.toString());

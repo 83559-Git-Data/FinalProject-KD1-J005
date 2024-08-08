@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class LoginDTO {
 	//@NotBlank(message = "username can't be blank")
-	private String username;
+	private String userName;
 	//@NotBlank(message = "Password is required!")
 	private String password;
 }

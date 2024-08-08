@@ -10,7 +10,7 @@ import Sidebar from "../../components/Slidebar/Sidebar";
 function AddFaculty() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
+  const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("FACULTY");
@@ -19,8 +19,6 @@ function AddFaculty() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  const navigate = useNavigate(); // dynamic navigation
 
   const onRegister = async () => {
     if (firstName.length === 0) {
@@ -46,9 +44,12 @@ function AddFaculty() {
           password,
           role
         );
-        console.log("Registration result:", result); // Log the result
 
-        navigate("/login");
+        if (result["status"] == 201) {
+          toast.success("Faculty Added Successfully ");
+        } else {
+          toast.error("Unsuccessfull Registration");
+        }
       } catch (error) {
         toast.error("An error occurred during registration");
       }
@@ -94,7 +95,7 @@ function AddFaculty() {
               <div className="mb-3">
                 <label htmlFor="">Email</label>
                 <input
-                  onChange={(e) => setUserName(e.target.value)}
+                  onChange={(e) => setuserName(e.target.value)}
                   type="text"
                   className="form-control"
                   placeholder="Enter your email"

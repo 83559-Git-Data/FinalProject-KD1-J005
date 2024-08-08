@@ -1,15 +1,17 @@
 import { useState } from "react";
 import "../Common.css";
 import "../Headers/Home";
+import { toast } from "react-toastify";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Slidebar/Sidebar";
+import { registerCourse } from "../../services/admin";
 function AddCourse() {
-  const [name, setName] = useState("");
-  const [facultyName, setFacultyName] = useState("");
+  const [courseName, setCourseName] = useState("");
+  const [capacity, setCapacity] = useState("");
   const [description, setDescription] = useState("");
-  const [course_id, setCourseId] = useState("");
+
   const [fee, setFee] = useState("");
-  const [faculty_id, setFacultyId] = useState("");
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -18,25 +20,48 @@ function AddCourse() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const onSave = () => {
-    if (name.length == 0) {
-      alert("Please enter valid Course Name");
-    } else if (facultyName.length == 0) {
-      console.log(name);
-      alert("Please enter valid Faculty Name");
+  const onSave = async () => {
+    if (courseName.length == 0) {
+      toast.error("Please enter valid Course Name");
+    } else if (capacity.length == 0) {
+      toast.error("Please enter Capacity");
     } else if (description.length == 0) {
-      alert("Please enter valid Description");
-    } else if (course_id.length == 0) {
-      alert("Please enter valid Course Id");
+      toast.error("Please enter valid Description");
     } else if (fee.length == 0) {
-      alert("Please enter valid Faculty Name");
-    } else if (faculty_id.length == 0) {
-      alert("Please enter valid Faculty Id");
+      toast.error("Please enter Fee");
     } else if (startDate.length == 0) {
-      alert("Please enter valid start date");
+      toast.error("Please enter valid start date");
     } else if (endDate.length == 0) {
-      alert("Please enter valid End date");
+      toast.error("Please enter valid End date");
+    } else {
+      debugger;
+      try {
+        const result = await registerCourse(
+          courseName,
+          fee,
+          description,
+          startDate,
+          endDate,
+          capacity
+        );
+        if (result["status"] == 201) {
+          toast.success("Course Successfully Added");
+        } else {
+          toast.error(result["error"]);
+        }
+      } catch (error) {
+        toast.error("Problem Occuring for Adding a new Course");
+      }
     }
+  };
+  const onCancel = () => {
+    setCourseName("");
+    setCapacity("");
+    setDescription("");
+    setFee("");
+    setStartDate("");
+    setEndDate("");
+    toast.info("Form cleared");
   };
 
   return (
@@ -59,18 +84,15 @@ function AddCourse() {
           <div className="row">
             <div className="col">
               <input
-                onChange={(e) => setName(e.target.value)}
+                value={courseName}
+                onChange={(e) => setCourseName(e.target.value)}
                 type="text"
                 className="form-control m-2"
                 placeholder="Course Name"
               />
-              <input
-                onChange={(e) => setFacultyName(e.target.value)}
-                type="text"
-                className="form-control m-2"
-                placeholder="Faculty Name"
-              />
+
               <textarea
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 type="text"
                 className="form-control m-2"
@@ -79,28 +101,25 @@ function AddCourse() {
             </div>
             <div className="col">
               <input
-                onChange={(e) => setCourseId(e.target.value)}
-                type="text"
-                className="form-control m-2"
-                placeholder="Course Id"
-              />
-              <input
+                value={fee}
                 onChange={(e) => setFee(e.target.value)}
-                type="text"
+                type="number"
                 className="form-control m-2"
                 placeholder="Fees"
               />
               <input
-                onChange={(e) => setFacultyId(e.target.value)}
-                type="text"
+                value={capacity}
+                onChange={(e) => setCapacity(e.target.value)}
+                type="number"
                 className="form-control m-2"
-                placeholder="Faculty Id"
+                placeholder="Capacity"
               />
             </div>
           </div>
           <div className="row">
             <div className="col">
               <input
+                value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
                 type="date"
                 className="form-control m-2"
@@ -109,6 +128,7 @@ function AddCourse() {
             </div>
             <div className="col">
               <input
+                value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
                 type="date"
                 className="form-control m-2"
@@ -125,14 +145,10 @@ function AddCourse() {
                 Save
               </button>
               <button
+                onClick={onCancel}
                 className="btn btn-danger"
                 style={{ marginRight: "1rem" }}>
                 Cancel
-              </button>
-              <button
-                className="btn btn-primary "
-                style={{ marginRight: "1rem" }}>
-                Edit
               </button>
             </div>
           </div>

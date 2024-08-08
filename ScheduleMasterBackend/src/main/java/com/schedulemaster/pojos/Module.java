@@ -70,34 +70,34 @@ public class Module extends BaseEntity {
     @Column(name = "hours", nullable = false)
     private int hours;
 
-    @ManyToMany(mappedBy = "modules")
-    @JsonBackReference
-    private List<Course> courses = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "modules")
-    @JsonBackReference
-    private List<Faculty> faculties = new ArrayList<>();
-
-    // Getters and Setters
-
-    public void addCourse(Course course) {
-        this.courses.add(course);
-        course.getModules().add(this);
-    }
-
-    public void removeCourse(Course course) {
-        this.courses.remove(course);
-        course.removeModule(this);
-    }
-
-    public void addFaculty(Faculty faculty) {
-        this.faculties.add(faculty);
-        faculty.getModules().add(this);
-    }
-
-    public void removeFaculty(Faculty faculty) {
-        this.faculties.remove(faculty);
-        faculty.removeModule(this);
-    }
+//    @ManyToMany(mappedBy = "modules")
+//    @JsonBackReference
+//    private List<Course> courses = new ArrayList<>();
+//
+//    @ManyToMany(mappedBy = "modules")
+//    @JsonBackReference
+//    private List<Faculty> faculties = new ArrayList<>();
+//
+//    // Getters and Setters
+//
+//    public void addCourse(Course course) {
+//        this.courses.add(course);
+//        course.getModules().add(this);
+//    }
+//
+//    public void removeCourse(Course course) {
+//        this.courses.remove(course);
+//        course.removeModule(this);
+//    }
+//
+//    public void addFaculty(Faculty faculty) {
+//        this.faculties.add(faculty);
+//        faculty.getModules().add(this);
+//    }
+//
+//    public void removeFaculty(Faculty faculty) {
+//        this.faculties.remove(faculty);
+//        faculty.removeModule(this);
+//    }
 }
 

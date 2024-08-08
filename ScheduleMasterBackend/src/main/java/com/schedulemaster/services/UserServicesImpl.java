@@ -60,7 +60,7 @@ public class UserServicesImpl implements UserService {
 	@Override
 	public ApiResponse Login(LoginDTO dto) {
 		System.out.println(dto);
-		User u = userDao.findByUserNameAndPassword(dto.getUsername(), dto.getPassword())
+		User u = userDao.findByUserNameAndPassword(dto.getUserName(), dto.getPassword())
 				.orElseThrow(() -> new RuntimeException("Invalid Email or Password !!!!!!"));
 		System.out.println(u.toString());
 		return u != null ? new ApiResponse("Login Successfully") : new ApiResponse("Login failed!!");

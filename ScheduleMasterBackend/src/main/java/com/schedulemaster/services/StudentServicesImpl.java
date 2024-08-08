@@ -38,7 +38,7 @@ public class StudentServicesImpl implements StudentService {
 		System.out.println(id);
 		User user = userdao.findById(id).orElseThrow(()-> new AuthenticationException("User Doesnt exitst"));
 		Course c=coursedao.findByCourseName(dto.getCoursename()).orElseThrow(()-> new AuthenticationException("Course Doesnt exitst"));
-		if(user.getRole().equals(Role.STUDENT)) {
+		if(user.getRole().equals(Role.ROLE_STUDENT)) {
 			System.out.println(user.toString());
 			Student student = map.map(dto, Student.class);
 			System.out.println(student.toString());

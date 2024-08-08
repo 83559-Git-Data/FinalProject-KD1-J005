@@ -1,5 +1,8 @@
 package com.schedulemaster.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import com.schedulemaster.dto.AddFacultyDTO;
 import com.schedulemaster.dto.AddModule;
 import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.exception.AuthenticationException;
+import com.schedulemaster.pojos.Course;
 import com.schedulemaster.pojos.Faculty;
 import com.schedulemaster.pojos.Module;
 import com.schedulemaster.pojos.Role;
@@ -87,5 +91,12 @@ public class FacultyServicesImpl implements FacultyServices {
 			return new ApiResponse("Module is added to the Course Successfully");
 		}
 		return new ApiResponse("somthing went wrong");
+	}
+
+	@Override
+	public List<Module> getModulesByFacultyId(Long id) {
+		Faculty faculty =facultyDao.findById(id).orElseThrow();
+	       List<Module> modules=faculty.getModules().stream().collect(Collectors.toList());
+	       return modules;
 	}
 }

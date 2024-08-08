@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -102,6 +103,19 @@ public class FacultyController {
 		} catch (RuntimeException e) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(new ApiResponse("Something went Wrong!!"));
+		}
+	}
+	@GetMapping("module/{id}")
+	public ResponseEntity<?> getAllModules(@PathVariable Long id) {
+		
+		try {
+			return ResponseEntity.status(HttpStatus.CREATED).body(facultyService.getModulesByFacultyId(id));
+			// here we are using Response entity send the response in body using service
+			// reference
+
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ResourceAccessException("Something went Wrong!!"));
 		}
 	}
 	

@@ -107,11 +107,13 @@ public class CourseServicesImpl implements CourseService {
 
     @Override
     public ApiResponse register(CourseRegistrationDTO dto) {
+    	
         Course course = modelMapper.map(dto, Course.class);
-       
+       if(dto.getStartDate().isBefore(dto.getEndDate())) {
         Course savedCourse = courseDao.save(course);
-
-        return savedCourse != null ? new ApiResponse("Course Registered Successfully") : new ApiResponse("Course Registration Failed!!");
+          return savedCourse != null ? new ApiResponse("Course Registered Successfully") : new ApiResponse("Course Registration Failed!!");
+    }
+       return new ApiResponse("starting date must be before the ned date!");
     }
 
 	@Override

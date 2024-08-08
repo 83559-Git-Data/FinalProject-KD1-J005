@@ -5,24 +5,26 @@ import { login } from "../../services/admin";
 import "../Common.css";
 
 function Login() {
-  const [username, setEmail] = useState("");
+  const [userName, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   // get navigation hook
   const navigate = useNavigate();
   const onLogin = async () => {
     debugger;
-    if (username.length == 0) {
+    if (userName.length == 0) {
       toast.error("Please enter email");
     } else if (password.length == 0) {
       toast.error("Please enter password");
     } else {
       try {
-        const result = await login(username, password);
+        debugger;
+        const result = await login(userName, password);
         if (result["status"] == 201) {
+          toast.success("Login Successfull");
           navigate("/home");
         } else {
-          toast.error(result["error"]);
+          toast.error("Login Unsuccessfull");
         }
       } catch (error) {
         toast.error("Something went wrong on Login");

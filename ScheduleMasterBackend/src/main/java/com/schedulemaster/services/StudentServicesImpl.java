@@ -46,6 +46,7 @@ public class StudentServicesImpl implements StudentService {
 			student.setCourse(c);
 			System.out.println(student.toString());
 			Student s = studentdao.save(student);
+			return new ApiResponse("Profile updated successfully!!");
 		}
 		return new ApiResponse("Something failed!!");
 	}

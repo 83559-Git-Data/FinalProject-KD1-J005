@@ -32,7 +32,7 @@ public class Faculty extends BaseEntity {
 	private String panId;
 	@Column(name = "dob", nullable = false)
 	private LocalDate dob;
-	@Column(name = "mobile_no", nullable = true)
+	@Column(name = "mobile_no", nullable = true , unique = true)
 	private String mobNo;
 	@OneToOne
 	@JoinColumn(name = "userId")

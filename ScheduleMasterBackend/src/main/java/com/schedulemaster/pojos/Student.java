@@ -20,7 +20,7 @@ import lombok.ToString;
 @Entity(name = "students")
 public class Student extends BaseEntity{
 	
-	@Column(name = "mobile_no",length = 15)
+	@Column(name = "mobile_no",length = 15,unique = true)
 	private String mobileNumber;
 	@Column(name = "address")
 	private String address;

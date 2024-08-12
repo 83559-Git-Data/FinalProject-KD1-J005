@@ -1,4 +1,5 @@
 package com.schedulemaster.services;
+
 import com.schedulemaster.customexception.ResourceNotFoundException;
 //
 //import java.lang.invoke.CallSite;
@@ -96,63 +97,83 @@ import java.util.stream.Collectors;
 @Transactional
 public class CourseServicesImpl implements CourseService {
 
-    @Autowired
-    private CourseDao courseDao;
+	@Autowired
+	private CourseDao courseDao;
 
-    @Autowired
-    private ModuleDao moduleDao;
+	@Autowired
+	private ModuleDao moduleDao;
 
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    @Override
-    public ApiResponse register(CourseRegistrationDTO dto) {
-    	
-        Course course = modelMapper.map(dto, Course.class);
-       if(dto.getStartDate().isBefore(dto.getEndDate())) {
-        Course savedCourse = courseDao.save(course);
-          return savedCourse != null ? new ApiResponse("Course Registered Successfully") : new ApiResponse("Course Registration Failed!!");
-    }
-       return new ApiResponse("starting date must be before the ned date!");
-    }
+	@Override
+	public ApiResponse register(CourseRegistrationDTO dto) {
+
+		Course course = modelMapper.map(dto, Course.class);
+		if (dto.getStartDate().isBefore(dto.getEndDate())) {
+			Course savedCourse = courseDao.save(course);
+			return savedCourse != null ? new ApiResponse("Course Registered Successfully")
+					: new ApiResponse("Course Registration Failed!!");
+		}
+		return new ApiResponse("starting date must be before the ned date!");
+	}
 
 	@Override
 	public ApiResponse addModule(AddModule dto, Long courseId) {
-		Course course=courseDao.findById(courseId).orElseThrow(()->new ResourceNotFoundException("course not found!"));
-		Module module=moduleDao.findByName(dto.getName());
-		if(course!=null && module!=null) {
+		Course course = courseDao.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("course not found!"));
+		Module module = moduleDao.findByName(dto.getName());
+		if (course != null && module != null) {
 			course.addModule(module);
 		}
 		return new ApiResponse("Module is added to the Course Successfully");
 	}
 
 	@Override
-    public List<CourseDTO> getAllCourses() {
-        List<Course> courses = courseDao.findAll();
-        return courses.stream().map(this::convertToDTO).collect(Collectors.toList());
-    }
-	 private CourseDTO convertToDTO(Course course) {
-	        CourseDTO courseDTO = new CourseDTO();
-	        courseDTO.setId(course.getId());
-	        courseDTO.setCourseName(course.getCourseName());
-	        courseDTO.setFees(course.getFees());
-	        courseDTO.setDescription(course.getDescription());
-	        courseDTO.setStartDate(course.getStartDate());
-	        courseDTO.setEndDate(course.getEndDate());
-	        courseDTO.setCapacity(course.getCapacity());
-//	        courseDTO.setModuleNames(course.getModules().stream().map(Module::getName).collect(Collectors.toSet()));
-	        return courseDTO;
-	    }
-	 @Override
-	 public CourseDTO getCourseById(Long id) {
-		 Course course=courseDao.findById(id).orElseThrow(()->new ResourceNotFoundException("course is not found!"));
-		 return convertToDTO(course);
-	 }
+	public List<CourseDTO> getAllCourses() {
+		List<Course> courses = courseDao.findAll();
+		return courses.stream().map(this::convertToDTO).collect(Collectors.toList());
+	}
 
-	 public List<Module> getModulesByCourseId(Long courseId) {
-	       Course course =courseDao.findById(courseId).orElseThrow();
-	       List<Module> modules=course.getModules().stream().collect(Collectors.toList());
-	       return modules;
-	    }
-    
+	private CourseDTO convertToDTO(Course course) {
+		CourseDTO courseDTO = new CourseDTO();
+		courseDTO.setId(course.getId());
+		courseDTO.setCourseName(course.getCourseName());
+		courseDTO.setFees(course.getFees());
+		courseDTO.setDescription(course.getDescription());
+		courseDTO.setStartDate(course.getStartDate());
+		courseDTO.setEndDate(course.getEndDate());
+		courseDTO.setCapacity(course.getCapacity());
+//	        courseDTO.setModuleNames(course.getModules().stream().map(Module::getName).collect(Collectors.toSet()));
+		return courseDTO;
+	}
+
+	@Override
+	public CourseDTO getCourseById(Long id) {
+		Course course = courseDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("course is not found!"));
+		return convertToDTO(course);
+	}
+
+	public List<Module> getModulesByCourseId(Long courseId) {
+		Course course = courseDao.findById(courseId).orElseThrow();
+		List<Module> modules = course.getModules().stream().collect(Collectors.toList());
+		return modules;
+	}
+
+	@Override
+	public ApiResponse updateCourseDetails(Long id, CourseDTO courseDTO) {
+		Course course = courseDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("course not found!"));
+		
+		course.setCourseName(courseDTO.getCourseName());
+		course.setCapacity(courseDTO.getCapacity());
+		course.setDescription(courseDTO.getDescription());
+		course.setFees(courseDTO.getFees());
+		course.setStartDate(courseDTO.getStartDate());
+		course.setEndDate(courseDTO.getEndDate());
+		
+		Course courseUpdated = courseDao.save(course);
+		return courseUpdated != null ? new ApiResponse("Course Updated Successfully")
+				: new ApiResponse("Course Updatation Failed!!");
+
+	}
 }

@@ -9,6 +9,7 @@ import com.schedulemaster.dto.AddModule;
 import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.CourseDTO;
 import com.schedulemaster.dto.CourseRegistrationDTO;
+import com.schedulemaster.pojos.Course;
 import com.schedulemaster.pojos.Module;
 
 public interface CourseService {
@@ -20,4 +21,6 @@ public interface CourseService {
 	public CourseDTO getCourseById(Long id);
 
 	public List<Module> getModulesByCourseId(Long id);
-}
+
+	ApiResponse updateCourseDetails(Long id, CourseDTO courseDTO);
+	}

@@ -1,5 +1,6 @@
 package com.schedulemaster.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class FacultyServicesImpl implements FacultyServices {
 	private UserDao userDao;
 	@Autowired
 	private ModelMapper map;
-	
+
 	@Autowired
 	private ModuleDao moduleDao;
 	// ModelMapper is a Java library used for object mapping. It helps in mapping
@@ -76,17 +77,17 @@ public class FacultyServicesImpl implements FacultyServices {
 			Faculty f = facultyDao.save(faculty);
 			return new ApiResponse("Profile Added Successfully!");
 			// this is called dao method that is inherited from the JPA Repository
-		}
-		else {
-		return new ApiResponse("Something failed!!");
+		} else {
+			return new ApiResponse("Something failed!!");
 		}
 	}
 
 	@Override
 	public ApiResponse addModule(AddModule dto, Long id) {
-		Faculty faculty =facultyDao.findById(id).orElseThrow(()->new ResourceNotFoundException("Faculty is not found of that id"));
-		Module module=moduleDao.findByName(dto.getName());
-		if(faculty!=null && module!=null) {
+		Faculty faculty = facultyDao.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Faculty is not found of that id"));
+		Module module = moduleDao.findByName(dto.getName());
+		if (faculty != null && module != null) {
 			faculty.addModule(module);
 			return new ApiResponse("Module is added to the Course Successfully");
 		}
@@ -95,8 +96,40 @@ public class FacultyServicesImpl implements FacultyServices {
 
 	@Override
 	public List<Module> getModulesByFacultyId(Long id) {
-		Faculty faculty =facultyDao.findById(id).orElseThrow();
-	       List<Module> modules=faculty.getModules().stream().collect(Collectors.toList());
-	       return modules;
+		Faculty faculty = facultyDao.findById(id).orElseThrow();
+		List<Module> modules = faculty.getModules().stream().collect(Collectors.toList());
+		return modules;
+	}
+
+	@Override
+	public Faculty getFacultyById(Long id) {
+		Faculty faculty = facultyDao.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Faculty is not found!"));
+
+		return faculty;
+	}
+
+	@Override
+	public ApiResponse updateFacultyDetails(Long id, AddFacultyDTO facultyDTO) {
+		Faculty f = facultyDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("user not found!"));
+
+		f.setDob(facultyDTO.getDob());
+		f.setCurrentAge(facultyDTO.getCurrentAge());
+		f.setAddress(facultyDTO.getAddress());
+		f.setMobNo(facultyDTO.getMobNo());
+		f.setPanId(facultyDTO.getPanId());
+
+		User u = userDao.findById(f.getUserId().getId()).orElseThrow();
+		u.setFirstName(facultyDTO.getFirstName());
+		u.setLastName(facultyDTO.getLastName());
+		u.setUserName(facultyDTO.getUserName());
+		u.setPassword(facultyDTO.getPassword());
+		
+		f.setUserId(u);
+
+		Faculty facultyUpdated = facultyDao.save(f);
+		
+		return facultyUpdated != null ? new ApiResponse("Faculty Updated Successfully")
+				: new ApiResponse("Faculty Updatation Failed!!");
 	}
 }

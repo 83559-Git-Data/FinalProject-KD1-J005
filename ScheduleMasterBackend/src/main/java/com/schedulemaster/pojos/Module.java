@@ -74,11 +74,11 @@ public class Module extends BaseEntity {
 //    @JsonBackReference
 //    private List<Course> courses = new ArrayList<>();
 //
-//    @ManyToMany(mappedBy = "modules")
+//    @ManyToMany(mappedBy = "modules",fetch = FetchType.EAGER)
 //    @JsonBackReference
 //    private List<Faculty> faculties = new ArrayList<>();
-//
-//    // Getters and Setters
+
+//    // Getters and Setters	
 //
 //    public void addCourse(Course course) {
 //        this.courses.add(course);

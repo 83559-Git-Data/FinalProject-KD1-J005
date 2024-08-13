@@ -58,4 +58,10 @@ public class ModuleController {
 		System.out.println("in update " + id + " " + moduleDTO);
 		return ResponseEntity.ok(moduleServices.updateModuleDetails(id, moduleDTO));
 	}
+	
+//	@GetMapping("/{id}/faculties")
+//	public ResponseEntity<?> getAllFaculties (@PathVariable Long id){
+////		System.out.println("in update " + id + " " + moduleDTO);
+//		return ResponseEntity.ok(moduleServices.getAllFaculties(id));
+//	} 
 }

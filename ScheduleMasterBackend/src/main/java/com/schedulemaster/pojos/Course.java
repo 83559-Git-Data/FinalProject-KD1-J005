@@ -82,7 +82,7 @@ public class Course extends BaseEntity {
     @Column(name = "capacity")
     private int capacity;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)//(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)//(fetch = FetchType.EAGER)
     @JoinTable(name = "course_modules", joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "module_id"))
 //    @JsonManagedReference

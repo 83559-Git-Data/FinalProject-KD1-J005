@@ -26,6 +26,10 @@ const Sidebar = () => {
             <BiBookContent className="icon" />
             Add New Course
           </Link>
+          <Link to="/addModule" className="nav-link item">
+            <BiBookContent className="icon" />
+            Add New Module
+          </Link>
           <Link to="/student-details" className="nav-link item">
             <BiSolidReport className="icon" />
             View Student Details

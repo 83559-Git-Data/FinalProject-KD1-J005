@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import "../Common.css";
 import "../Headers/Home";
 import Sidebar from "../../components/Slidebar/Sidebar";
-import facultyData from "../../Dummy/facultyDetails.json";
+// import facultyData from "../../Dummy/facultyDetails.json";
+import { getFacultyDetails } from "../../services/admin";
 
 function Faculty() {
-  const [faculties, setFaculties] = useState(facultyData);
+  const [faculties, setFaculties] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const navigate = useNavigate();
+  useEffect(() => {
+    const loadFaculty = async () => {
+      debugger;
+      const result = await getFacultyDetails();
+      if (result && result.status === 200) {
+        setFaculties(result.data);
+      }
+    };
+    loadFaculty();
+  }, []);
 
   const onDelete = (index) => {
     // Delete a faculty
@@ -58,10 +69,11 @@ function Faculty() {
                       <th>S.No</th>
                       <th>First Name</th>
                       <th>Last Name</th>
-                      <th>Course</th>
-                      <th>Module</th>
-                      <th>Schedule</th>
+                      <th>Pan Id</th>
+                      <th>Current Age</th>
+                      {/* <th>Schedule</th> */}
                       <th>Mobile Number</th>
+                      <th>User Name</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -69,12 +81,13 @@ function Faculty() {
                     {faculties.map((faculty, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{faculty.firstName}</td>
-                        <td>{faculty.lastName}</td>
-                        <td>{faculty.course}</td>
-                        <td>{faculty.module}</td>
-                        <td>{`${faculty.schedule.startDate} to ${faculty.schedule.endDate}`}</td>
-                        <td>{faculty.mobileNumber}</td>
+                        <td>{faculty.userId.firstName}</td>
+                        <td>{faculty.userId.lastName}</td>
+                        <td>{faculty.panId}</td>
+                        <td>{faculty.currentAge}</td>
+                        {/* <td>{`${faculty.userId.startDate} to ${faculty.userId.endDate}`}</td> */}
+                        <td>{faculty.mobNo}</td>
+                        <td>{faculty.userId.userName}</td>
                         <td>
                           <button
                             onClick={() => onDelete(index)}

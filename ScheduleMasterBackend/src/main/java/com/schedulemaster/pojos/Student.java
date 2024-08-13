@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,6 +32,7 @@ public class Student extends BaseEntity{
 	private String city;
 	@JoinColumn(name = "course_id")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Course course;
 	@Column(name = "enrolled_date")
 	@CreatedDate	

@@ -1,3 +1,4 @@
+
 package com.schedulemaster.dto;
 
 import java.time.LocalDate;
@@ -11,12 +12,13 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class StudentRegistrationDTO {
+public class StudentDTO {
 	private String mobileNumber;
 	private String address;
 	private String state;
 	private String city;
-	private String coursename;
-	private LocalDate enrolledDate;
+	private String firstName;
+	private String lastName;
+	
 	
 }

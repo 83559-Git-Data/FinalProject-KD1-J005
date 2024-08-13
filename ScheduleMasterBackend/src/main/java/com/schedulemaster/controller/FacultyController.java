@@ -140,5 +140,18 @@ public class FacultyController {
 		System.out.println("in update " + id + " " + facultyDTO);
 		return ResponseEntity.ok(facultyService.updateFacultyDetails(id, facultyDTO));
 	}
-	
+
+	@GetMapping("/allFaculties")
+	public ResponseEntity<?> getFaculty() {
+
+		try {
+			return ResponseEntity.ok(facultyService.getAllFaculties());
+			// here we are using Response entity send the response in body using service
+			// reference
+
+		} catch (RuntimeException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(new ResourceAccessException("Something went Wrong!!"));
+		}
 	}
+}

@@ -130,4 +130,9 @@ public class FacultyServicesImpl implements FacultyServices {
 		return facultyUpdated != null ? new ApiResponse("Faculty Updated Successfully")
 				: new ApiResponse("Faculty Updatation Failed!!");
 	}
+
+	@Override
+	public List<Faculty> getAllFaculties() {
+		return facultyDao.findAll();
+	}
 }

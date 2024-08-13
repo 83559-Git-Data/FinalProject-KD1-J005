@@ -20,4 +20,6 @@ public interface FacultyServices {
 	Faculty getFacultyById(Long id);
 
 	ApiResponse updateFacultyDetails(Long id, AddFacultyDTO facultyDTO);
+
+	List<Faculty>  getAllFaculties();
 }

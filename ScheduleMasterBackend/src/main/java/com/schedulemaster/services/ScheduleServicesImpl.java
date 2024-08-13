@@ -1,6 +1,8 @@
 package com.schedulemaster.services;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import com.schedulemaster.pojos.Schedule;
 @Service
 @Transactional
 public class ScheduleServicesImpl implements ScheduleService {
+	
 
 	@Autowired
 	private ModelMapper map;
@@ -62,5 +65,22 @@ public class ScheduleServicesImpl implements ScheduleService {
 		}
 		return new ApiResponse("Somthing went Wrong!!");
 	}
+
 	
+	@Override
+	public List getAllSchedule() {
+		List<Schedule> scheduleList=scheduleDao.findAll();
+		return scheduleList;
+	}
+
+
+	@Override
+	public List<Schedule> getScheduleOfFaculty(Long id) {
+		
+		return null;
+	}
+	@Override
+	 public List<Schedule> getAvailableSchedules(LocalDate startDate, LocalDate endDate, Long facultyId, Long courseId, Long moduleId) {
+	        return scheduleDao.findOverlappingSchedules(startDate, endDate, facultyId, courseId, moduleId);
+	    }
 }

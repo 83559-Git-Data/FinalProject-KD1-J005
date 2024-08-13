@@ -26,23 +26,14 @@ import com.schedulemaster.pojos.User;
 //for the use of modularity we have implemented interface
 
 @Service
-//The @Service annotation in Spring is used to indicate that a class is a "Service" and it is a 
-//specialization of the @Component annotation. Service classes typically contain the business 
-//logic of your application and are used to handle the processing required by the application, 
-//separate from the controller and repository layers.
+//The @Service annotation in Spring is used to indicate that a class is a "Service" 
 @Transactional
 //The @Transactional annotation in Spring is used to manage transaction boundaries in a 
-//declarative way. This annotation can be applied to classes or methods to define the 
-//scope of a database transaction. When applied, it ensures that a series of operations
-//within the annotated scope are executed within a transaction context.
+//declarative way. 
 public class FacultyServicesImpl implements FacultyServices {
 	// dependencies
 	@Autowired
-	// org.springframework.beans.factory.annotation.Autowired;
-	// this annotation allows Spring to resolve and inject collaborating beans into
-	// your bean.
-	// @Autowired(required = false) //this is annotation is used with argument to
-	// make dependency optional
+	
 	private FacultyDao facultyDao;
 	@Autowired
 	private UserDao userDao;
@@ -51,19 +42,11 @@ public class FacultyServicesImpl implements FacultyServices {
 
 	@Autowired
 	private ModuleDao moduleDao;
-	// ModelMapper is a Java library used for object mapping. It helps in mapping
-	// data between different object models, which is especially useful in scenarios
-	// like mapping between database entities and Data Transfer Objects (DTOs), or
-	// between various representations of data in your application. This is commonly
-	// used in scenarios involving data transformation and reducing boilerplate
-	// code.
-
-	// Registration API
+	
 	@Override
 	public ApiResponse addFaculty(AddFacultyDTO dto, Long id) {
 		System.out.println(dto.toString());
 		System.out.println(id);
-		// dto.setRole(dto.getRole().toUpperCase());
 		User user = userDao.findById(id).orElseThrow(() -> new AuthenticationException("User Doesnt exitst"));
 		if (user.getRole().equals(Role.ROLE_FACULTY)) {
 			System.out.println(user.toString());
@@ -71,12 +54,9 @@ public class FacultyServicesImpl implements FacultyServices {
 			System.out.println(faculty.toString());
 			faculty.setUserId(user);
 			System.out.println(faculty.toString());
-			// The map function in ModelMapper is used to copy values from one object to
-			// another based on the mappings defined.
-			// System.out.println(user.toString());
+			
 			Faculty f = facultyDao.save(faculty);
 			return new ApiResponse("Profile Added Successfully!");
-			// this is called dao method that is inherited from the JPA Repository
 		} else {
 			return new ApiResponse("Something failed!!");
 		}

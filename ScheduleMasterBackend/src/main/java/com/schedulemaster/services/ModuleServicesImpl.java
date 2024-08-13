@@ -1,5 +1,7 @@
 package com.schedulemaster.services;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import com.schedulemaster.dao.FacultyDao;
 import com.schedulemaster.dao.ModuleDao;
 import com.schedulemaster.dto.AddModuleDTO;
 import com.schedulemaster.dto.ApiResponse;
+import com.schedulemaster.pojos.Faculty;
 import com.schedulemaster.pojos.Module;
 @Service
 @Transactional
@@ -49,6 +52,15 @@ public class ModuleServicesImpl implements ModuleService{
 		return moduleUpdated != null ? new ApiResponse("Module Updated Successfully")
 				: new ApiResponse("Module Updatation Failed!!");
 	}
+
+//	@Override
+//	public List<Faculty> getAllFaculties(Long id) {
+//		Module m=moduleDao.findById(id).orElseThrow();
+//		for(Faculty faculty:m.getFaculties()) {
+//		System.out.println(faculty.toString());
+//		}
+//		return m.getFaculties();
+//	}
 
 
 

@@ -14,4 +14,6 @@ public interface UserService {
 
 	public ApiResponse Login(LoginDTO dto);
 	public ApiResponse UpdateInfo(UpdateDTO dto, Long id);
+
+	ApiResponse deleteUser(Long id);
 }

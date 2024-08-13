@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.schedulemaster.customexception.ResourceNotFoundException;
 import com.schedulemaster.dao.UserDao;
 import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.LoginDTO;
@@ -13,37 +15,16 @@ import com.schedulemaster.dto.UserRegistertaionDTO;
 import com.schedulemaster.pojos.User;
 import com.schedulemaster.exception.*;
 
-//for the use of modularity we have implemented interface
 
 @Service
-//The @Service annotation in Spring is used to indicate that a class is a "Service" and it is a 
-//specialization of the @Component annotation. Service classes typically contain the business 
-//logic of your application and are used to handle the processing required by the application, 
-//separate from the controller and repository layers.
 @Transactional
-//The @Transactional annotation in Spring is used to manage transaction boundaries in a 
-//declarative way. This annotation can be applied to classes or methods to define the 
-//scope of a database transaction. When applied, it ensures that a series of operations
-//within the annotated scope are executed within a transaction context.
 public class UserServicesImpl implements UserService {
-	// dependencies
 	@Autowired
-	// org.springframework.beans.factory.annotation.Autowired;
-	// this annotation allows Spring to resolve and inject collaborating beans into
-	// your bean.
-	// @Autowired(required = false) //this is annotation is used with argument to
-	// make dependency optional
+	
 	private UserDao userDao;
 	@Autowired
 	private ModelMapper map;
-	// ModelMapper is a Java library used for object mapping. It helps in mapping
-	// data between different object models, which is especially useful in scenarios
-	// like mapping between database entities and Data Transfer Objects (DTOs), or
-	// between various representations of data in your application. This is commonly
-	// used in scenarios involving data transformation and reducing boilerplate
-	// code.
-
-	// Registration API
+	
 	@Override
 	public ApiResponse register(UserRegistertaionDTO dto) {
 		// System.out.println(dto.toString());
@@ -53,7 +34,7 @@ public class UserServicesImpl implements UserService {
 		// another based on the mappings defined.
 		System.out.println(user.toString());
 		User u = userDao.save(user);
-		//this is called dao method that is inherited from the JPA Repository
+		// this is called dao method that is inherited from the JPA Repository
 		return u != null ? new ApiResponse("Registration Successfully") : new ApiResponse("Registartion failed!!");
 	}
 
@@ -62,8 +43,13 @@ public class UserServicesImpl implements UserService {
 		System.out.println(dto);
 		User u = userDao.findByUserNameAndPassword(dto.getUserName(), dto.getPassword())
 				.orElseThrow(() -> new RuntimeException("Invalid Email or Password !!!!!!"));
-		System.out.println(u.toString());
-		return u != null ? new ApiResponse("Login Successfully") : new ApiResponse("Login failed!!");
+		if (u.isStatus() == true) {
+			System.out.println(u.toString());
+			return new ApiResponse("Login Successfully");
+		}
+		else {
+			return new ApiResponse("Login failed!!");
+		}
 	}
 
 	@Override
@@ -78,6 +64,14 @@ public class UserServicesImpl implements UserService {
 			return new ApiResponse("information is updated Successfully");
 		}
 		return new ApiResponse("something went Wrong!");
+	}
+
+	@Override
+	public ApiResponse deleteUser(Long id) {
+		User user = userDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+		user.setStatus(false);
+		User u = userDao.save(user);
+		return new ApiResponse("user is Deleted!");
 	}
 
 }

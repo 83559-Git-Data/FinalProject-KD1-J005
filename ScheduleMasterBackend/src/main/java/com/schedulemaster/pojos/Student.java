@@ -31,7 +31,7 @@ public class Student extends BaseEntity{
 	@Column(name = "city",length = 50)
 	private String city;
 	@JoinColumn(name = "course_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JsonIgnore
 	private Course course;
 	@Column(name = "enrolled_date")

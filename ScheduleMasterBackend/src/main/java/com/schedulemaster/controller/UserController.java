@@ -3,6 +3,10 @@ package com.schedulemaster.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +20,7 @@ import com.schedulemaster.dto.ApiResponse;
 import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UpdateDTO;
 import com.schedulemaster.dto.UserRegistertaionDTO;
+import com.schedulemaster.security.JwtUtils;
 import com.schedulemaster.services.UserService;
 
 @RestController
@@ -45,6 +50,12 @@ public class UserController {
 	// @Autowired(required = false) //this is annotation is used with argument to
 	// make dependency optional
 	private UserService userService;
+	
+	@Autowired
+	private AuthenticationManager authMgr;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
 
 	// The @PostMapping annotation is part of the Spring framework and is used
 	// to handle HTTP POST requests in Spring MVC. It is a specialized version of
@@ -86,38 +97,7 @@ public class UserController {
 	// to handle HTTP POST requests in Spring MVC. It is a specialized version of
 	// the
 	// @RequestMapping annotation that acts specifically on HTTP POST requests.
-	@PostMapping("/login")
-	// The ResponseEntity class in Spring is used to represent the entire HTTP
-	// response,
-	// including the status code, headers, and body. It is a powerful tool for
-	// creating
-	// and customizing HTTP responses in your RESTful APIs.
-	// The @RequestBody annotation in Spring MVC is used to bind the HTTP request
-	// body
-	// to a method parameter in a controller. This is particularly useful when you
-	// need
-	// to handle data sent in the body of an HTTP POST, PUT, or PATCH request, such
-	// as JSON or XML data.
-	public ResponseEntity<?> Login(@RequestBody LoginDTO dto) {
-		// dto is genarlly used to map the data coming from frontend
-		// this data is mapped using Model mapper class map function
-		System.out.println("CONTROLLER " + dto);
-		try {
-			// there is possibility that it can throw exception so we need to handle here in
-			// try catch
-			return ResponseEntity.status(HttpStatus.CREATED).body(userService.Login(dto));
-			// here we are using Response entity send the response in body using service
-			// reference
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-					.body(new ApiResponse("Something went Wrong!!"));
-		}
-	}
 
-	// The @PostMapping annotation is part of the Spring framework and is used
-	// to handle HTTP POST requests in Spring MVC. It is a specialized version of
-	// the
-	// @RequestMapping annotation that acts specifically on HTTP POST requests.
 	@PostMapping("/update/{id}")
 	// The ResponseEntity class in Spring is used to represent the entire HTTP
 	// response,
@@ -141,5 +121,29 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(new ApiResponse("Something went Wrong!!"));
 		}
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> authenticateUser(@RequestBody 
+			LoginDTO request) {
+		System.out.println("in sign in" + request);
+		//create a token to store un verified user email n pwd
+		UsernamePasswordAuthenticationToken token=new 
+				UsernamePasswordAuthenticationToken(request.getUserName(), 
+						request.getPassword());
+		System.out.println(token);
+		//invoke auth mgr's authenticate method;
+		Authentication verifiedToken = authMgr.authenticate(token);
+		System.out.println(verifiedToken);
+		SecurityContextHolder.getContext().setAuthentication(verifiedToken);
+		//=> auth successful !
+		System.out.println(verifiedToken.getPrincipal().getClass());//custom user details object
+		//create JWT n send it to the clnt in response
+		ApiResponse resp=new ApiResponse
+				(
+				"Successful Auth!!!!",
+				jwtUtils.generateJwtToken(verifiedToken));
+		return ResponseEntity.
+				status(HttpStatus.CREATED).body(resp);
 	}
 }

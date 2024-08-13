@@ -3,6 +3,11 @@ package com.schedulemaster.services;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.schedulemaster.dao.UserDao;
@@ -11,6 +16,7 @@ import com.schedulemaster.dto.LoginDTO;
 import com.schedulemaster.dto.UpdateDTO;
 import com.schedulemaster.dto.UserRegistertaionDTO;
 import com.schedulemaster.pojos.User;
+import com.schedulemaster.security.JwtUtils;
 import com.schedulemaster.exception.*;
 
 //for the use of modularity we have implemented interface
@@ -34,6 +40,16 @@ public class UserServicesImpl implements UserService {
 	// @Autowired(required = false) //this is annotation is used with argument to
 	// make dependency optional
 	private UserDao userDao;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
+	
+	@Autowired
+	private AuthenticationManager authMgr;
+	
+	@Autowired
+	private PasswordEncoder enco;
+	
 	@Autowired
 	private ModelMapper map;
 	// ModelMapper is a Java library used for object mapping. It helps in mapping
@@ -49,6 +65,9 @@ public class UserServicesImpl implements UserService {
 		// System.out.println(dto.toString());
 		// dto.setRole(dto.getRole().toUpperCase());
 		User user = map.map(dto, User.class);
+		
+		String encyPass=enco.encode(dto.getPassword());
+		user.setPassword(encyPass);
 		// The map function in ModelMapper is used to copy values from one object to
 		// another based on the mappings defined.
 		System.out.println(user.toString());
@@ -60,6 +79,16 @@ public class UserServicesImpl implements UserService {
 	@Override
 	public ApiResponse Login(LoginDTO dto) {
 		System.out.println(dto);
+		
+		
+		dto.setPassword(enco.encode(dto.getPassword()));
+		UsernamePasswordAuthenticationToken token=new 
+				UsernamePasswordAuthenticationToken(dto.getUserName(), 
+						dto.getPassword());
+		System.out.println(token);
+		Authentication verifiedToken = authMgr.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(verifiedToken);
+		System.out.println(verifiedToken.getPrincipal().getClass());
 		User u = userDao.findByUserNameAndPassword(dto.getUserName(), dto.getPassword())
 				.orElseThrow(() -> new RuntimeException("Invalid Email or Password !!!!!!"));
 		System.out.println(u.toString());

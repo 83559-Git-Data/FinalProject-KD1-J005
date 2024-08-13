@@ -122,8 +122,6 @@ public class FacultyServicesImpl implements FacultyServices {
 		User u = userDao.findById(f.getUserId().getId()).orElseThrow();
 		u.setFirstName(facultyDTO.getFirstName());
 		u.setLastName(facultyDTO.getLastName());
-		u.setUserName(facultyDTO.getUserName());
-		u.setPassword(facultyDTO.getPassword());
 		
 		f.setUserId(u);
 

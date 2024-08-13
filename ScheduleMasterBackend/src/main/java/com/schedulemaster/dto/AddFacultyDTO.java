@@ -17,7 +17,6 @@ public class AddFacultyDTO {
 	private String mobNo;
 	private String firstName;
 	private String lastName;
-	private String userName;
-	private String password;
+
 
 }

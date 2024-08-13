@@ -8,11 +8,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,6 +45,7 @@ public class Faculty extends BaseEntity {
 	@Column(name = "current_age")
 	private int currentAge;
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(name = "faculty_module", joinColumns = @JoinColumn(name = "faculty_id"), inverseJoinColumns = @JoinColumn(name = "module_id"))
 	private Set<Module> modules=new HashSet<>();
 	

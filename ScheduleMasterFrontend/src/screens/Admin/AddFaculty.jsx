@@ -13,7 +13,7 @@ function AddFaculty() {
   const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("FACULTY");
+  const [role, setRole] = useState("ROLE_FACULTY");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -126,7 +126,7 @@ function AddFaculty() {
                   className="form-control"
                   id="role">
                   <option value="">Select Role</option>
-                  <option value="FACULTY">Faculty</option>
+                  <option value="ROLE_FACULTY">Faculty</option>
                 </select>
               </div>
               <div className="mb-3">

@@ -1,60 +1,130 @@
-import React, { useState } from "react";
-import dummyData from "../../Dummy/scheduleFaculty.json";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
-import "../Common.css";
-import "../Headers/Home";
+import { toast } from "react-toastify";
 import Sidebar from "../../components/Slidebar/Sidebar";
+import {
+  getCourses,
+  getModulesByCourse,
+  getFaculty,
+  scheduleFaculty,
+} from "../../services/admin";
+import "../Common.css";
 
 function ScheduleFaculty() {
+  debugger;
+  const [courses, setCourses] = useState([]);
+  const [modules, setModules] = useState([]);
+  const [faculties, setFaculties] = useState([]);
+
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedModule, setSelectedModule] = useState("");
   const [selectedFaculty, setSelectedFaculty] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-  const onSave = () => {
-    if (selectedCourse.length == 0) {
-      alert("Please select Course Name");
-    } else if (selectedModule.length == 0) {
-      alert("Please select  Module Name");
-    } else if (selectedFaculty.length == 0) {
-      alert("Please select Faculty Name");
-    } else if (startDate.length == 0) {
-      alert("Please enter valid start date");
-    } else if (endDate.length == 0) {
-      alert("Please enter valid End date");
-    }
-  };
-
   const handleCourseChange = (event) => {
-    setSelectedCourse(event.target.value);
+    const courseId = event.target.value;
+    console.log("Anupam vaishy jhasfudyeaof" + courseId);
+    setSelectedCourse(courseId);
     setSelectedModule("");
     setSelectedFaculty("");
+    fetchModules(courseId);
   };
 
   const handleModuleChange = (event) => {
-    setSelectedModule(event.target.value);
+    const moduleId = event.target.value;
+    console.log("Anupam vaishy 33333333333333333" + moduleId);
+    setSelectedModule(moduleId);
     setSelectedFaculty("");
+    fetchFaculties(moduleId);
   };
 
   const handleFacultyChange = (event) => {
     setSelectedFaculty(event.target.value);
   };
 
-  const getModules = () => {
-    if (!selectedCourse) return [];
-    const course = dummyData.find((course) => course.Course === selectedCourse);
-    return course ? course.modules : [];
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    debugger;
+    try {
+      const response = await getCourses();
+      console.log("Fetched courses:", response.data); // Log response data for debugging
+      setCourses(response.data);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    }
   };
 
-  const getFaculties = () => {
-    if (!selectedCourse) return [];
-    const course = dummyData.find((course) => course.Course === selectedCourse);
-    return course ? course.faculties : [];
+  const fetchModules = async (courseId) => {
+    debugger;
+    try {
+      const response = await getModulesByCourse(courseId);
+      console.log("Fetched modules:", response.data); // Log response data for debugging
+      setModules(response.data);
+    } catch (error) {
+      console.error("Error fetching modules:", error);
+      setModules([]); // Fallback to an empty array to prevent `undefined` issues
+    }
+  };
+
+  const fetchFaculties = async () => {
+    debugger;
+    try {
+      const response = await getFaculty();
+      console.log("Fetched Faculties:", response.data); // Log response data for debugging
+      setFaculties(response.data);
+    } catch (error) {
+      console.error("Error fetching faculties:", error);
+      setFaculties([]); // Fallback to an empty array to prevent `undefined` issues
+    }
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const onSave = async () => {
+    if (!selectedCourse) {
+      toast.error("Please select Course Name");
+    } else if (!selectedModule) {
+      toast.error("Please select Module Name");
+    } else if (!selectedFaculty) {
+      toast.error("Please select Faculty Name");
+    } else if (!startDate) {
+      toast.error("Please enter valid Start Date");
+    } else if (!endDate) {
+      toast.error("Please enter valid End Date");
+    } else if (!startTime) {
+      toast.error("Please enter valid Start Time");
+    } else if (!endTime) {
+      toast.error("Please enter valid End Time");
+    } else {
+      debugger;
+      console.log("selectedCourse" + selectedCourse);
+      console.log("selectedModule" + selectedModule);
+      console.log("selectedFaculty" + selectedFaculty);
+      const result = await scheduleFaculty(
+        selectedCourse,
+        selectedModule,
+        selectedFaculty,
+        startDate,
+        endDate,
+        startTime,
+        endTime
+      );
+      console.log("Results is this " + result);
+      if (result["status"] === 201) {
+        toast.success("Faculty scheduled successfully");
+      } else {
+        toast.error("Failed to schedule faculty");
+      }
+    }
   };
 
   return (
@@ -82,9 +152,9 @@ function ScheduleFaculty() {
                 onChange={handleCourseChange}
                 className="form-control">
                 <option value="">Select Course</option>
-                {dummyData.map((course, index) => (
-                  <option key={index} value={course.Course}>
-                    {course.Course}
+                {courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.courseName}
                   </option>
                 ))}
               </select>
@@ -98,9 +168,9 @@ function ScheduleFaculty() {
                 disabled={!selectedCourse}
                 className="form-control">
                 <option value="">Select Module</option>
-                {getModules().map((module, index) => (
-                  <option key={index} value={module}>
-                    {module}
+                {modules.map((module) => (
+                  <option key={module.id} value={module.id}>
+                    {module.name}
                   </option>
                 ))}
               </select>
@@ -111,16 +181,17 @@ function ScheduleFaculty() {
               <select
                 value={selectedFaculty}
                 onChange={handleFacultyChange}
-                disabled={!selectedCourse}
+                disabled={!selectedModule}
                 className="form-control">
                 <option value="">Select Faculty</option>
-                {getFaculties().map((faculty, index) => (
-                  <option key={index} value={faculty}>
-                    {faculty}
+                {faculties.map((faculty) => (
+                  <option key={faculty.id} value={faculty.id}>
+                    {faculty.userId.firstName} {faculty.userId.lastName}
                   </option>
                 ))}
               </select>
             </div>
+
             <div className="row">
               <div className="col">
                 <input
@@ -136,6 +207,25 @@ function ScheduleFaculty() {
                   type="date"
                   className="form-control m-2"
                   placeholder="End Date"
+                />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col">
+                <input
+                  onChange={(e) => setStartTime(e.target.value)}
+                  type="time"
+                  className="form-control m-2"
+                  placeholder="Start Time"
+                />
+              </div>
+              <div className="col">
+                <input
+                  onChange={(e) => setEndTime(e.target.value)}
+                  type="time"
+                  className="form-control m-2"
+                  placeholder="End Time"
                 />
               </div>
             </div>

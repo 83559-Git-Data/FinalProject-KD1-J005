@@ -13,6 +13,7 @@ import AboutUs from "./screens/Headers/AboutUs";
 import ScheduleFaculty from "./screens/Admin/ScheduleFaculty";
 import FacultyDetails from "./screens/Admin/FactultyDetails";
 import StudentDetails from "./screens/Admin/StudentsDetails";
+import AddModule from "./screens/Admin/AddModule";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="home" element={<Home />} />
         <Route path="student" element={<Student />} />
         <Route path="addCourse" element={<AddCourse />} />
+        <Route path="addModule" element={<AddModule />} />
         <Route path="addFaculty" element={<AddFaculty />} />
         <Route path="aboutus" element={<AboutUs />} />
         <Route path="schedulefaculty" element={<ScheduleFaculty />} />
